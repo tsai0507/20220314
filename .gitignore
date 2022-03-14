@@ -1,0 +1,63 @@
+#include <iostream>
+#include <string>
+#include <iomanip>
+#include <sstream>
+#include <fstream>
+using namespace std;
+
+
+class Binary_Number{
+	
+private:
+    unsigned int no;
+public:
+    Binary_Number(const string& num);
+    Binary_Number():no(0){	}
+    friend ostream& operator<< (ostream& os, const Binary_Number& foo);
+    friend Binary_Number operator+ (const Binary_Number& foo1, const Binary_Number& foo2);
+    friend Binary_Number operator* (const Binary_Number& foo1, const Binary_Number& foo2);
+};
+
+
+Binary_Number::Binary_Number(const string& num){
+	int bin_integer;
+    bin_integer = stoi(num);
+   	int value = 0, dev = 0, mod = 0, two = 1, temp;
+    while (bin_integer > 0 ) {
+        temp = bin_integer;
+        dev = temp/10;
+        mod = temp%10;
+        value += mod*two;
+        two *= 2;
+        bin_integer /= 10;
+    }
+   no = value;
+}
+ostream& operator<< (ostream& os, const Binary_Number& foo){
+	os<<foo.no;
+}
+Binary_Number operator+ (const Binary_Number& foo1, const Binary_Number& foo2){
+	Binary_Number temp;
+	temp.no=foo1.no+foo2.no;
+	return temp;
+}
+Binary_Number operator* (const Binary_Number& foo1, const Binary_Number& foo2){
+	Binary_Number temp;
+	temp.no=foo1.no*foo2.no;
+	return temp;
+}
+
+
+
+
+int main(int argc, const char * argv[]) {
+    
+    Binary_Number a(10010), b(110);
+    
+    cout << a << endl;      //輸出：10010(18)
+    cout << b << endl;      //輸出：110(6)
+    
+    cout << a+b << endl;    //輸出：11000(24)
+    cout << a*b << endl;    //輸出：1101100(108)
+    return 0;
+}
